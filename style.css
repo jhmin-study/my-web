@@ -1,25 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600&display=swap');
 
-/* 🌗 Light & Dark Mode Colors */
 :root {
     --primary: #5a73ff;
     --primary-light: #738aff;
+
     --bg-start: #eef2ff;
     --bg-end: #dce4ff;
-    --white: #ffffff;
+
     --card-bg: #ffffff;
     --text: #222;
     --footer: #888;
-    --shadow: rgba(0, 0, 0, 0.07);
+
+    /* Ball colors */
+    --yellow: #f9d423;
+    --blue: #4a90e2;
+    --red: #e94e4e;
+    --gray: #9ea7b8;
+    --green: #4caf50;
+
+    --shadow: rgba(0,0,0,0.12);
 }
 
+/* ✨ Dark Mode */
 body.dark {
-    --bg-start: #1d1f24;
+    --bg-start: #1c1e22;
     --bg-end: #111217;
     --card-bg: #2a2c32;
-    --text: #e8e8e8;
+    --text: #e6e6e6;
     --footer: #aaa;
-    --shadow: rgba(0, 0, 0, 0.5);
 }
 
 body {
@@ -32,15 +40,20 @@ body {
     align-items: center;
     min-height: 100vh;
     color: var(--text);
+
+    /* 스마트폰 풀스크린을 위한 설정 */
+    height: 100dvh;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
 }
 
 .container {
+    width: 95%;
+    max-width: 480px;
+    padding: 25px 20px 40px;
+    border-radius: 22px;
     background: var(--card-bg);
-    width: 90%;
-    max-width: 450px;
-    padding: 40px 30px;
-    border-radius: 20px;
-    box-shadow: 0 8px 25px var(--shadow);
+    box-shadow: 0 8px 30px var(--shadow);
     text-align: center;
 }
 
@@ -51,67 +64,70 @@ body {
 }
 
 .title {
-    font-size: 26px;
+    font-size: 24px;
+    margin-bottom: 8px;
     font-weight: 600;
 }
 
 .toggle-btn {
     background: transparent;
     border: none;
-    font-size: 24px;
+    font-size: 26px;
     cursor: pointer;
-    transition: 0.25s;
-}
-
-.toggle-btn:hover {
-    transform: scale(1.2);
 }
 
 .btn {
+    margin-top: 10px;
     background: var(--primary);
-    color: var(--white);
+    color: white;
     border: none;
-    padding: 15px 20px;
+    padding: 16px;
     width: 100%;
-    font-size: 18px;
-    border-radius: 12px;
+    border-radius: 14px;
+    font-size: 20px;
+    font-weight: 600;
     cursor: pointer;
-    transition: 0.25s ease;
 }
 
-.btn:hover {
-    background: var(--primary-light);
+.btn:active {
+    transform: scale(0.98);
 }
 
+/* 결과 박스 */
 .result-box {
     margin-top: 30px;
-    padding: 20px;
-    min-height: 80px;
-    background: rgba(255,255,255,0.4);
-    border-radius: 12px;
+    padding: 25px 5px;
+    min-height: 100px;
+
+    background: rgba(255,255,255,0.5);
+    border-radius: 16px;
 }
 
 body.dark .result-box {
-    background: rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.25);
 }
 
+/* 번호 공 스타일 */
 .number {
     display: inline-block;
-    background: var(--primary-light);
-    color: white;
-    padding: 12px 16px;
-    margin: 5px;
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+
     border-radius: 50%;
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 700;
+
+    margin: 6px;
+    color: white;
     opacity: 0;
-    transform: scale(0.3);
+    transform: scale(0.2);
     animation: pop 0.35s forwards;
 }
 
-/* 🎉 번호 등장 애니메이션 */
+/* 🎉 등장 애니메이션 */
 @keyframes pop {
-    0% { opacity: 0; transform: scale(0.3); }
+    0% { opacity: 0; transform: scale(0.2); }
     60% { opacity: 1; transform: scale(1.15); }
     100% { transform: scale(1); }
 }
