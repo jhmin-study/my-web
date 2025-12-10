@@ -1,9 +1,7 @@
-# generate_lotto_page.py
-# This Python script writes a standalone HTML file (index.html) for a Lotto number generator.
-# Rationale: the canvas/textdoc was previously stored as a Python file but contained raw HTML which
-# caused a SyntaxError when executed as Python. To avoid that, we store the HTML in a triple-quoted
-# Python string and write it to disk. This file is safe to execute under Python and includes simple
-# assertions (tests) to ensure the critical CSS lines exist and are correctly formatted.
+"""
+generate_lotto_page.py
+자동 로또 HTML 생성기
+"""
 
 HTML_CONTENT = '''<!DOCTYPE html>
 <html lang="ko">
