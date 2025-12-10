@@ -12,6 +12,19 @@ document.getElementById('generate').addEventListener('click', () => {
     const resultBox = document.getElementById('result');
 
     resultBox.innerHTML = nums
-        .map(n => `<span class="number">${n}</span>`)
+        .map((n, idx) => 
+            `<span class="number" style="animation-delay:${idx * 0.08}s">${n}</span>`
+        )
         .join("");
+});
+
+/* 🌙 다크모드 토글 */
+const toggleBtn = document.getElementById('themeToggle');
+
+toggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+
+    // 아이콘 변경
+    toggleBtn.textContent = 
+        document.body.classList.contains('dark') ? "☀️" : "🌙";
 });
