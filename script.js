@@ -1,30 +1,38 @@
-function generateLottoNumbers() {
-    const numbers = [];
-    while (numbers.length < 6) {
-        const n = Math.floor(Math.random() * 45) + 1;
-        if (!numbers.includes(n)) numbers.push(n);
-    }
-    return numbers.sort((a, b) => a - b);
+function getBallColor(n) {
+    if (n <= 10) return "var(--yellow)";
+    if (n <= 20) return "var(--blue)";
+    if (n <= 30) return "var(--red)";
+    if (n <= 40) return "var(--gray)";
+    return "var(--green)";
 }
 
-document.getElementById('generate').addEventListener('click', () => {
-    const nums = generateLottoNumbers();
-    const resultBox = document.getElementById('result');
+function generateLottoNumbers() {
+    const nums = [];
+    while (nums.length < 6) {
+        const n = Math.floor(Math.random() * 45) + 1;
+        if (!nums.includes(n)) nums.push(n);
+    }
+    return nums.sort((a, b) => a - b);
+}
 
-    resultBox.innerHTML = nums
-        .map((n, idx) => 
-            `<span class="number" style="animation-delay:${idx * 0.08}s">${n}</span>`
-        )
-        .join("");
+document.getElementById("generate").addEventListener("click", () => {
+    const nums = generateLottoNumbers();
+    const box = document.getElementById("result");
+
+    box.innerHTML = nums
+      .map((n, i) =>
+        `<span class="number"
+            style="background:${getBallColor(n)}; animation-delay:${i * 0.1}s;">
+            ${n}
+        </span>`
+      )
+      .join("");
 });
 
-/* 🌙 다크모드 토글 */
-const toggleBtn = document.getElementById('themeToggle');
+/* 🌙 다크모드 변경 */
+const toggleBtn = document.getElementById("themeToggle");
 
-toggleBtn.addEventListener('click', () => {
-    document.body.classList.toggle('dark');
-
-    // 아이콘 변경
-    toggleBtn.textContent = 
-        document.body.classList.contains('dark') ? "☀️" : "🌙";
+toggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    toggleBtn.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
 });
