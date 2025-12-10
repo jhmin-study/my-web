@@ -142,7 +142,6 @@
 
 
 def write_file(path='index.html'):
-    """Write the HTML content to the given path."""
     with open(path, 'w', encoding='utf-8') as f:
         f.write(HTML_CONTENT)
     print(f'Wrote {path} (size={len(HTML_CONTENT)} bytes)')
