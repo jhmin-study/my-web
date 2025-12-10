@@ -1,32 +1,189 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="theme-color" content="#5a73ff" />
-    <title>로또 번호 자동 생성기</title>
-    <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>로또 번호 생성기</title>
+
+<style>
+    /* 전체 화면 기본 */
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        touch-action: manipulation;
+        font-family: 'Arial', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        transition: background 0.3s, color 0.3s;
+    }
+
+    /* 라이트 / 다크 모드 색상 */
+    :root {
+        --bg: #f3f6ff;
+        --text: #222;
+
+        --yellow: #f8c400;
+        --blue: #4aa8d8;
+        --red: #e56767;
+        --gray: #777;
+        --green: #4caf50;
+    }
+
+    body.dark {
+        --bg: #1e1e1e;
+        --text: #f0f0f0;
+
+        --yellow: #f8e27a;
+        --blue: #7ac6f1;
+        --red: #ff8b8b;
+        --gray: #aaa;
+        --green: #8be89d;
+    }
+
+    /* 컨테이너 */
+    .wrap {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 28px;
+        margin-bottom: 30px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    /* 버튼 */
+    #generate {
+        padding: 14px 28px;
+        font-size: 20px;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        background: #4a6cf7;
+        color: #fff;
+        cursor: pointer;
+        margin-bottom: 25px;
+        transition: transform 0.1s;
+    }
+
+    #generate:active {
+        transform: scale(0.95);
+    }
+
+    /* 다크모드 버튼 */
+    #themeToggle {
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        font-size: 26px;
+        cursor: pointer;
+        background: none;
+        border: none;
+    }
+
+    /* 번호 영역 */
+    #result {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    /* 번호 공 */
+    .number {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 55px;
+        height: 55px;
+        margin: 6px;
+        border-radius: 50%;
+        font-size: 24px;
+        font-weight: bold;
+        color: #fff;
+        animation: pop 0.4s ease-out forwards;
+    }
+
+    /* 번호 팝업 애니메이션 (사라지지 않음) */
+    @keyframes pop {
+        0% {
+            transform: scale(0.5);
+            opacity: 0;
+        }
+        60% {
+            transform: scale(1.2);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+</style>
 </head>
+
 <body>
-    <div class="container">
 
-        <div class="top-bar">
-            <h1 class="title">🎯 로또 번호 자동 생성기</h1>
-            <button id="themeToggle" class="toggle-btn">🌙</button>
-        </div>
+<button id="themeToggle">🌙</button>
 
-        <button id="generate" class="btn">번호 생성</button>
+<div class="wrap">
+    <h1>🎉 로또 번호 생성기</h1>
 
-        <div id="result" class="result-box">
-            <p class="placeholder">아래 버튼을 눌러 번호를 생성하세요.</p>
-        </div>
+    <button id="generate">번호 생성</button>
 
-        <footer class="footer">
-            © 2025 Lotto Picker
-        </footer>
-    </div>
+    <div id="result"></div>
+</div>
 
-    <script src="script.js"></script>
+<script>
+/* 번호 색상 구간 */
+function getBallColor(n) {
+    if (n <= 10) return "var(--yellow)";
+    if (n <= 20) return "var(--blue)";
+    if (n <= 30) return "var(--red)";
+    if (n <= 40) return "var(--gray)";
+    return "var(--green)";
+}
+
+/* 랜덤 번호 생성 */
+function generateLottoNumbers() {
+    const nums = [];
+    while (nums.length < 6) {
+        const n = Math.floor(Math.random() * 45) + 1;
+        if (!nums.includes(n)) nums.push(n);
+    }
+    return nums.sort((a, b) => a - b);
+}
+
+/* 버튼 클릭 시 번호 생성 */
+document.getElementById("generate").addEventListener("click", () => {
+    const nums = generateLottoNumbers();
+    const box = document.getElementById("result");
+
+    box.innerHTML = nums
+      .map((n, i) =>
+        `<span class="number"
+            style="background:${getBallColor(n)}; animation-delay:${i * 0.1}s;">
+            ${n}
+        </span>`
+      )
+      .join("");
+});
+
+/* 🌙 다크모드 */
+const toggleBtn = document.getElementById("themeToggle");
+toggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    toggleBtn.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+});
+</script>
+
 </body>
 </html>
